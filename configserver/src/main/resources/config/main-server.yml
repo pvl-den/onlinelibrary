@@ -1,0 +1,50 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env
+server:
+  port: 7101
+
+spring:
+  sleuth:
+    sampler:
+      probability: 100
+  application:
+    name: main-server
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lib?schema=public
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+    schema:
+      classpath: schema.sql
+    data:
+      classpath: data.sql
+
+  sql:
+    init:
+      mode: always
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 30
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true
+
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+
+
+zuul:
+  prefix: /api
