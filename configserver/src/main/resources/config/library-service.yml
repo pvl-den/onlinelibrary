@@ -1,0 +1,38 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env
+
+spring:
+  data:
+    mongodb:
+      authentication-database: admin
+      port: 27017
+      database: library
+      host:  127.0.0.1
+
+  main:
+    allow-bean-definition-overriding: true
+
+mongock:
+  runner-type: "InitializingBean"
+#  runner-type: "ApplicationRunner" # default
+  change-logs-scan-package:
+    - ru.otus.libraryservice.mongock.changelog
+
+  mongo-db:
+    write-concern:
+      journal: false
+    read-concern: local
+
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 30
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true
+
+  client:
+    register-with-eureka: true
+    fetch-registry: true
