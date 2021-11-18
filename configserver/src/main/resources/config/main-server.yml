@@ -2,7 +2,14 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,env
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    defaults:
+      enabled: true
+
 server:
   port: 7101
 
