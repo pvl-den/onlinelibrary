@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.otus.mainserver.dto.BookDto;
 import ru.otus.mainserver.feign.BookFeign;
+import ru.otus.mainserver.rest.dto.ParamBookDto;
 
 import java.util.List;
 
@@ -16,8 +17,19 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @HystrixCommand(fallbackMethod = "emptyBookCollection")
-    public List<BookDto> getAll() {
-        return bookFeign.getAll();
+    public List<BookDto> books() {
+        return bookFeign.books();
+    }
+
+    @Override
+    @HystrixCommand(fallbackMethod = "emptyBook")
+    public BookDto createBook(ParamBookDto paramBookDto) {
+        return bookFeign.createBook(paramBookDto);
+
+    }
+
+    BookDto emptyBook(ParamBookDto paramBookDto){
+        return BookDto.builder().build();
     }
 
     List<BookDto> emptyBookCollection() {

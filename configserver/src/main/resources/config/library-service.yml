@@ -20,7 +20,6 @@ spring:
 
   main:
     allow-bean-definition-overriding: true
-
 mongock:
   runner-type: "InitializingBean"
 #  runner-type: "ApplicationRunner" # default

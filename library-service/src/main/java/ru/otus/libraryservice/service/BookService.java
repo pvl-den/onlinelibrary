@@ -1,6 +1,8 @@
 package ru.otus.libraryservice.service;
 
+import ru.otus.libraryservice.dto.BookDto;
 import ru.otus.libraryservice.entity.Book;
+import ru.otus.libraryservice.rest.dto.ParamBookDto;
 
 import java.util.List;
 
@@ -8,15 +10,13 @@ public interface BookService {
 
     long count();
 
-    Book save(Book book);
+    BookDto getById(String id);
 
-    Book getById(String id);
+    BookDto getByName(String name);
 
-    Book getByName(String name);
-
-    List<Book> getAll();
+    List<BookDto> books();
 
     void deleteById(String id);
 
-    Book createBook(String name, String authorId, String genreId);
+    BookDto createBook(ParamBookDto paramBookDto);
 }

@@ -1,15 +1,19 @@
 package ru.otus.libraryservice.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.libraryservice.dto.AuthorDto;
 import ru.otus.libraryservice.entity.Author;
 import ru.otus.libraryservice.repository.AuthorRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
@@ -21,27 +25,39 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     @Transactional
-    public Author save(final Author author) {
-        return authorRepository.save(author);
+    public AuthorDto save(final AuthorDto author) {
+        try {
+        Author savedAuthor = authorRepository.save(AuthorDto.toEntity(author));
+        return AuthorDto.toDto(savedAuthor);
+    }catch (Exception e){
+            log.error("Ошибка сохранения автора: ");
+            return null;
+        }
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Author getById(final String id) {
-        return authorRepository.findById(id).orElse(null);
+    public AuthorDto getById(final String id) {
+        Author author = authorRepository.findById(id).orElse(null);
+
+        return AuthorDto.toDto(author);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Author getByName(String authorName) {
-        return authorRepository.findByName(authorName);
+    public AuthorDto getByName(String authorName) {
+        Author author = authorRepository.findByName(authorName);
+
+        return AuthorDto.toDto(author);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Author> getAll() {
-        return authorRepository.findAll();
+    public List<AuthorDto> authors() {
+        return authorRepository.findAll().stream().map(AuthorDto::toDto).collect(Collectors.toList());
     }
+
+
 
     @Override
     @Transactional
