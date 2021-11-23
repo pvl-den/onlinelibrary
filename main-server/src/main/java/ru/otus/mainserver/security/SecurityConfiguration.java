@@ -35,8 +35,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers("/book/edit")
                     .hasAnyAuthority("ROLE_LIBRARIAN")
                     .and()
-                .authorizeRequests().antMatchers("/**").denyAll()
-                .and()
+//                .authorizeRequests().antMatchers("/**").denyAll()
+//                .and()
                 // Включает Form-based аутентификацию
                 .formLogin()
                 .and()

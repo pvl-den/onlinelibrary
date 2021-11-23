@@ -1,5 +1,6 @@
 package ru.otus.libraryservice.service;
 
+import ru.otus.libraryservice.dto.AuthorDto;
 import ru.otus.libraryservice.entity.Author;
 
 import java.util.List;
@@ -8,13 +9,13 @@ public interface AuthorService {
 
     long count();
 
-    Author save(Author author);
+    AuthorDto save(AuthorDto author);
 
-    Author getById(String id);
+    AuthorDto getById(String id);
 
-    Author getByName(String authorName);
+    AuthorDto getByName(String authorName);
 
-    List<Author> getAll();
+    List<AuthorDto> authors();
 
     void deleteById(String id);
 }

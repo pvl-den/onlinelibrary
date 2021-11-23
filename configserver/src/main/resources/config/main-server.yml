@@ -14,11 +14,11 @@ server:
   port: 7101
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   sleuth:
     sampler:
       probability: 100
-  application:
-    name: main-server
   datasource:
     url: jdbc:postgresql://localhost:5432/lib?schema=public
     username: postgres
@@ -55,3 +55,12 @@ eureka:
 
 zuul:
   prefix: /api
+  strip-prefix: true
+
+hystrix:
+  command:
+    HystrixCommandKey:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
