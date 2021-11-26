@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface GenreService {
 
-    public List<GenreDto> genres();
+    List<GenreDto> genres();
+
+    GenreDto getById(String id) throws InterruptedException;
 }

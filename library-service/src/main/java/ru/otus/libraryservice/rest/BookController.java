@@ -23,7 +23,7 @@ public class BookController {
         return bookService.books();
     }
 
-    @PostMapping("/book")
+    @PostMapping("/book/edit")
     public BookDto createBook(@RequestBody ParamBookDto paramBookDto){
         return bookService.createBook(paramBookDto);
     }

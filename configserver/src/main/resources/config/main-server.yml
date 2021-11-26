@@ -54,7 +54,7 @@ eureka:
 
 
 zuul:
-  prefix: /api
+  prefix: "/api"
   strip-prefix: true
 
 hystrix:
@@ -63,4 +63,4 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 30000
+            timeoutInMilliseconds: 3000

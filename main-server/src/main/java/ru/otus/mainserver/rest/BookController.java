@@ -21,7 +21,7 @@ public class BookController {
         return bookService.books();
     }
 
-    @PostMapping("/book")
+    @PostMapping("/edit/book")
     @CrossOrigin
     public BookDto createBook(@RequestBody ParamBookDto paramBookDto){
         return bookService.createBook(paramBookDto);
