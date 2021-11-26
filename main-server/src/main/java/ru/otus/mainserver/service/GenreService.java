@@ -16,4 +16,6 @@ public interface GenreService {
     GenreDto updateGenre(ParamDto paramDto);
 
     Boolean deleteGenre(String id);
+
+    GenreDto getByName(String genreName);
 }

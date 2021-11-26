@@ -27,7 +27,7 @@ public class GenreServiceImpl implements GenreService {
     @HystrixCommand(fallbackMethod = "emptyGenre")
     public GenreDto getById(String id) throws InterruptedException {
         Thread.sleep(10000);
-        return genreFeign.genres(id);
+        return genreFeign.getById(id);
     }
 
     @Override
@@ -48,16 +48,25 @@ public class GenreServiceImpl implements GenreService {
         return genreFeign.deleteGenre(id);
     }
 
+    @Override
+    public GenreDto getByName(String genreName) {
+        return genreFeign.getByName(genreName);
+    }
+
     List<GenreDto> emptyGenreCollection() {
         return List.of(GenreDto.builder().build());
     }
 
-    GenreDto emptyGenre() {
+    GenreDto emptyGenre(ParamDto paramDto) {
+        return GenreDto.builder().build();
+    }
+
+    GenreDto emptyGenre(String id) {
         log.info("проверка HystrixCommand");
         return GenreDto.builder().build();
     }
 
-    Boolean falseGenre() {
+    Boolean falseGenre(String id) {
         return false;
     }
 }

@@ -10,6 +10,8 @@ public interface GenreService {
 
     GenreDto getById(String id);
 
+    GenreDto getByName(String genreName);
+
     List<GenreDto> genres();
 
     GenreDto createGenre(ParamDto paramDto);
@@ -17,4 +19,5 @@ public interface GenreService {
     GenreDto updateGenre(ParamDto paramDto);
 
     Boolean deleteGenre(String id);
+
 }

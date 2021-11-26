@@ -16,8 +16,8 @@ public interface GenreFeign {
     @GetMapping("/genre")
     List<GenreDto> genres();
 
-    @GetMapping("/genre/{id}")
-    GenreDto genres(@PathVariable("id") final String id);
+    @GetMapping("/genre/byId/{id}")
+    GenreDto getById(@PathVariable("id") final String id);
 
     @PostMapping("/genre/create")
     GenreDto createGenre(@RequestBody ParamDto paramDto);
@@ -27,4 +27,7 @@ public interface GenreFeign {
 
     @DeleteMapping("/genre/delete/{id}")
     Boolean deleteGenre(@PathVariable("id") String id);
+
+    @GetMapping("/genre/byName/{genreName}")
+    GenreDto getByName(@PathVariable("genreName") String genreName);
 }

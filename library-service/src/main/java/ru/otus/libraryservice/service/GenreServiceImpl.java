@@ -28,16 +28,26 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public GenreDto getByName(String genreName) {
+        final Genre genre = genreRepository.findByName(genreName);
+        return GenreDto.toDto(genre);
+    }
+
+    @Override
     public List<GenreDto> genres() {
         return genreRepository.findAll().stream().map(GenreDto::toDto).collect(Collectors.toList());
     }
 
     @Override
+    @Transactional
     public GenreDto createGenre(ParamDto paramDto) {
-
         if (StringUtils.isBlank(paramDto.getGenreName())) {
             throw new IllegalArgumentException("Ошибка параметров");
         }
+
+        log.info("создание жанра: {}", paramDto.getGenreName());
+
         try {
             final Genre genre = Genre.builder().name(paramDto.getGenreName()).build();
             final Genre savedGenre = genreRepository.save(genre);
@@ -50,11 +60,14 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    @Transactional
     public GenreDto updateGenre(ParamDto paramDto) {
 
         if (StringUtils.isBlank(paramDto.getGenreName()) || StringUtils.isBlank(paramDto.getId())) {
             throw new IllegalArgumentException("Ошибка параметров");
         }
+
+        log.info("обновление жанра: {}", paramDto.getGenreName());
 
         try {
             final Genre genre = Genre.builder().id(paramDto.getId()).name(paramDto.getGenreName()).build();
@@ -67,6 +80,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    @Transactional
     public Boolean deleteGenre(String id) {
         log.info("удаление жанра с id: {}", id);
         try {

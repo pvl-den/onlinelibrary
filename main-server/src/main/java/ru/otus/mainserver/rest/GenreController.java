@@ -23,9 +23,14 @@ public class GenreController {
         return genreService.genres();
     }
 
-    @GetMapping("/genre/{id}")
-    public GenreDto genres(@PathVariable("id") final String id) throws InterruptedException {
+    @GetMapping("/genre/byId{id}")
+    public GenreDto genreById(@PathVariable("id") final String id) throws InterruptedException {
         return genreService.getById(id);
+    }
+
+    @GetMapping("/genre/byName/{genreName}")
+    public GenreDto genreByName(@PathVariable("genreName") final String genreName) {
+        return genreService.getByName(genreName);
     }
 
     @PostMapping("/genre/create")

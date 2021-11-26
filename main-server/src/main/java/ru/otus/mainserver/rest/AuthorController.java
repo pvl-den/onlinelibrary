@@ -23,5 +23,4 @@ public class AuthorController {
         return authorService.authors();
     }
 
-
 }
