@@ -1,16 +1,15 @@
-package ru.otus.libraryservice.rest.dto;
+package ru.otus.mainserver.rest.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.otus.libraryservice.entity.Book;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ParamBookDto {
+public class ParamDto {
 
+    private String id;
 
     private String name;
 

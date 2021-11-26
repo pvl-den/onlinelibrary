@@ -10,6 +10,10 @@ management:
     defaults:
       enabled: true
 
+info:
+  author: denis
+  discription: online-library project (microservices)
+
 server:
   port: 7101
 

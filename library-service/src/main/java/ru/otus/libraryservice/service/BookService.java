@@ -1,8 +1,7 @@
 package ru.otus.libraryservice.service;
 
 import ru.otus.libraryservice.dto.BookDto;
-import ru.otus.libraryservice.entity.Book;
-import ru.otus.libraryservice.rest.dto.ParamBookDto;
+import ru.otus.libraryservice.rest.dto.ParamDto;
 
 import java.util.List;
 
@@ -18,5 +17,5 @@ public interface BookService {
 
     void deleteById(String id);
 
-    BookDto createBook(ParamBookDto paramBookDto);
+    BookDto createBook(ParamDto paramBookDto);
 }
