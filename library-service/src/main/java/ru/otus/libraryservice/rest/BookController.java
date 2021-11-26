@@ -6,11 +6,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.otus.libraryservice.dto.BookDto;
-import ru.otus.libraryservice.rest.dto.ParamBookDto;
+import ru.otus.libraryservice.rest.dto.ParamDto;
 import ru.otus.libraryservice.service.BookService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,7 +23,7 @@ public class BookController {
     }
 
     @PostMapping("/book/edit")
-    public BookDto createBook(@RequestBody ParamBookDto paramBookDto){
+    public BookDto createBook(@RequestBody ParamDto paramBookDto){
         return bookService.createBook(paramBookDto);
     }
 }

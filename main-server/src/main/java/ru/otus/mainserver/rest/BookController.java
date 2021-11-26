@@ -3,11 +3,10 @@ package ru.otus.mainserver.rest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.otus.mainserver.dto.BookDto;
-import ru.otus.mainserver.rest.dto.ParamBookDto;
+import ru.otus.mainserver.rest.dto.ParamDto;
 import ru.otus.mainserver.service.BookService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +22,7 @@ public class BookController {
 
     @PostMapping("/edit/book")
     @CrossOrigin
-    public BookDto createBook(@RequestBody ParamBookDto paramBookDto){
+    public BookDto createBook(@RequestBody ParamDto paramBookDto){
         return bookService.createBook(paramBookDto);
     }
 }

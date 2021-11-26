@@ -3,10 +3,9 @@ package ru.otus.mainserver.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import ru.otus.mainserver.dto.BookDto;
+import org.springframework.web.bind.annotation.*;
 import ru.otus.mainserver.dto.GenreDto;
+import ru.otus.mainserver.rest.dto.ParamDto;
 
 import java.util.List;
 
@@ -15,9 +14,20 @@ import java.util.List;
 public interface GenreFeign {
 
     @GetMapping("/genre")
-    List<GenreDto>  genres();
+    List<GenreDto> genres();
 
-    @GetMapping("/genre/{id}")
-    GenreDto  genres(@PathVariable("id") final String id);
+    @GetMapping("/genre/byId/{id}")
+    GenreDto getById(@PathVariable("id") final String id);
 
+    @PostMapping("/genre/create")
+    GenreDto createGenre(@RequestBody ParamDto paramDto);
+
+    @PutMapping("/genre/update")
+    GenreDto updateGenre(@RequestBody ParamDto paramDto);
+
+    @DeleteMapping("/genre/delete/{id}")
+    Boolean deleteGenre(@PathVariable("id") String id);
+
+    @GetMapping("/genre/byName/{genreName}")
+    GenreDto getByName(@PathVariable("genreName") String genreName);
 }

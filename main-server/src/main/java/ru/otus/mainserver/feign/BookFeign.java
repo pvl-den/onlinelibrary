@@ -5,9 +5,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import ru.otus.mainserver.dto.BookDto;
-import ru.otus.mainserver.rest.dto.ParamBookDto;
+import ru.otus.mainserver.rest.dto.ParamDto;
 
 import java.util.List;
 
@@ -19,6 +18,6 @@ public interface BookFeign {
     public List<BookDto>  books();
 
     @PostMapping("/edit/book")
-    public BookDto createBook(ParamBookDto paramBookDto);
+    public BookDto createBook(ParamDto paramBookDto);
 
 }

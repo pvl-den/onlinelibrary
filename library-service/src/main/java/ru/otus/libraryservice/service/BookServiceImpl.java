@@ -5,16 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.libraryservice.dto.AuthorDto;
 import ru.otus.libraryservice.dto.BookDto;
-import ru.otus.libraryservice.dto.GenreDto;
 import ru.otus.libraryservice.entity.Author;
 import ru.otus.libraryservice.entity.Book;
 import ru.otus.libraryservice.entity.Genre;
 import ru.otus.libraryservice.repository.AuthorRepository;
 import ru.otus.libraryservice.repository.BookRepository;
 import ru.otus.libraryservice.repository.GenreRepository;
-import ru.otus.libraryservice.rest.dto.ParamBookDto;
+import ru.otus.libraryservice.rest.dto.ParamDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,7 +71,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public BookDto createBook(final ParamBookDto paramBookDto) {
+    public BookDto createBook(final ParamDto paramBookDto) {
         log.info("Создание книги с параметрами name: {} authorName: {} genreName: {}", paramBookDto.getName(), paramBookDto.getAuthorName(), paramBookDto.getGenreName());
 
         if (!checkBookParameter(paramBookDto)) {
@@ -111,7 +109,7 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    private boolean checkBookParameter(final ParamBookDto paramBookDto) {
+    private boolean checkBookParameter(final ParamDto paramBookDto) {
         if (paramBookDto == null) return false;
         return StringUtils.isNotBlank(paramBookDto.getName()) && StringUtils.isNotBlank(paramBookDto.getAuthorName()) && StringUtils.isNotBlank(paramBookDto.getGenreName());
     }
