@@ -40,6 +40,7 @@ spring:
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+    defer-datasource-initialization: true
     generate-ddl: false
     hibernate:
       ddl-auto: validate

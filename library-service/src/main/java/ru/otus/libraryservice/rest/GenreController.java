@@ -31,7 +31,6 @@ public class GenreController {
         return genreService.getByName(genreName);
     }
 
-
     @PostMapping("/genre/create")
     public GenreDto createGenre(@RequestBody ParamDto paramDto){
         return genreService.createGenre(paramDto);

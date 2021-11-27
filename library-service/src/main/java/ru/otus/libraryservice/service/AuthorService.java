@@ -2,14 +2,11 @@ package ru.otus.libraryservice.service;
 
 import ru.otus.libraryservice.dto.AuthorDto;
 import ru.otus.libraryservice.entity.Author;
+import ru.otus.libraryservice.rest.dto.ParamDto;
 
 import java.util.List;
 
 public interface AuthorService {
-
-    long count();
-
-    AuthorDto save(AuthorDto author);
 
     AuthorDto getById(String id);
 
@@ -17,5 +14,9 @@ public interface AuthorService {
 
     List<AuthorDto> authors();
 
-    void deleteById(String id);
+    AuthorDto createAuthor(ParamDto paramDto);
+
+    AuthorDto updateAuthor(ParamDto paramDto);
+
+    Boolean deleteAuthor(String id);
 }

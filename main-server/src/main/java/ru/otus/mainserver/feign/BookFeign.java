@@ -17,7 +17,7 @@ public interface BookFeign {
     @GetMapping("/book")
     public List<BookDto>  books();
 
-    @PostMapping("/edit/book")
+    @PostMapping("/book/create")
     public BookDto createBook(ParamDto paramBookDto);
 
 }

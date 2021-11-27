@@ -1,9 +1,9 @@
 package ru.otus.mainserver.rest;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.otus.mainserver.dto.AuthorDto;
+import ru.otus.mainserver.dto.GenreDto;
+import ru.otus.mainserver.rest.dto.ParamDto;
 import ru.otus.mainserver.service.AuthorService;
 
 import java.util.List;
@@ -17,10 +17,39 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
-    @GetMapping("/author")
     @CrossOrigin
+    @GetMapping("/author")
     public List<AuthorDto> authors() {
         return authorService.authors();
     }
 
+    @CrossOrigin
+    @GetMapping("/author/byId{id}")
+    public AuthorDto authorById(@PathVariable("id") final String id) {
+        return authorService.getById(id);
+    }
+
+    @CrossOrigin
+    @GetMapping("/author/byName/{authorName}")
+    public AuthorDto authorByName(@PathVariable("authorName") final String authorName) {
+        return authorService.getByName(authorName);
+    }
+
+    @CrossOrigin
+    @PostMapping("/author/create")
+    public AuthorDto createAuthor(@RequestBody ParamDto paramDto){
+        return authorService.createAuthor(paramDto);
+    }
+
+    @CrossOrigin
+    @PutMapping("/author/update")
+    public AuthorDto updateAuthor(@RequestBody ParamDto paramDto){
+        return authorService.updateAuthor(paramDto);
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/author/delete/{id}")
+    public Boolean deleteAuthor(@PathVariable("id") final String id){
+        return authorService.deleteAuthor(id);
+    }
 }
