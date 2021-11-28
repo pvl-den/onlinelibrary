@@ -28,7 +28,22 @@ public class BookServiceImpl implements BookService {
 
     }
 
+    @Override
+    @HystrixCommand(fallbackMethod = "emptyBook")
+    public BookDto getById(String id) {
+        return bookFeign.getById(id);
+    }
+
+    @Override
+    @HystrixCommand(fallbackMethod = "emptyBook")
+    public BookDto getByName(String bookName) {
+        return bookFeign.getByName(bookName);
+    }
+
     BookDto emptyBook(ParamDto paramBookDto){
+        return BookDto.builder().build();
+    }
+    BookDto emptyBook(String bookName){
         return BookDto.builder().build();
     }
 

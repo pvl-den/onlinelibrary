@@ -25,4 +25,17 @@ public class BookController {
     public BookDto createBook(@RequestBody ParamDto paramBookDto){
         return bookService.createBook(paramBookDto);
     }
+
+    @CrossOrigin
+    @GetMapping("/book/byId/{id}")
+    public BookDto bookById(@PathVariable("id") final String id) {
+        return bookService.getById(id);
+    }
+
+    @CrossOrigin
+    @GetMapping("/book/byName/{bookName}")
+    public BookDto bookByName(@PathVariable("bookName") final String bookName) {
+        return bookService.getByName(bookName);
+    }
+
 }

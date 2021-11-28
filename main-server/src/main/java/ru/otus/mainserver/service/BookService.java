@@ -10,4 +10,8 @@ public interface BookService {
     public List<BookDto> books();
 
     public BookDto createBook(ParamDto paramBookDto);
+
+    public BookDto getById(String id);
+
+    public BookDto getByName(String bookName);
 }

@@ -23,26 +23,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure( HttpSecurity http ) throws Exception {
         http.csrf().disable().httpBasic().and()
-                .authorizeRequests()
-                .antMatchers("/")
-                .permitAll()
+                    .authorizeRequests()
+                    .antMatchers("/user/**")
+                    .permitAll()
                 .and()
-                .authorizeRequests()
+                    .authorizeRequests()
                     .antMatchers( "/book","/genre", "/author" )
                     .hasAnyAuthority("ROLE_USER", "ROLE_ADMIN", "ROLE_LIBRARIAN")
-                    .and()
-                .authorizeRequests()
-                    .antMatchers("/book/edit")
+                .and()
+                    .authorizeRequests()
+                    .antMatchers("/book/create", "/book/update", "/genre/create", "/genre/update", "/author/create", "/author/update")
                     .hasAnyAuthority("ROLE_LIBRARIAN")
-                    .and()
-//                .authorizeRequests().antMatchers("/**").denyAll()
-//                .and()
-                // Включает Form-based аутентификацию
-                .formLogin()
                 .and()
-                .logout()
+                    .authorizeRequests()
+                    .antMatchers("/**")
+                    .denyAll()
                 .and()
-                .exceptionHandling().accessDeniedHandler(deniedHandler);
+                    // Включает Form-based аутентификацию
+                    .formLogin()
+                .and()
+                    .logout()
+                .and()
+                    .exceptionHandling().accessDeniedHandler(deniedHandler);
     }
 
     @SuppressWarnings("deprecation")

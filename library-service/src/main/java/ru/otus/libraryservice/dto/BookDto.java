@@ -20,12 +20,18 @@ public class BookDto {
 
     private String author;
 
+    private String description;
+
+    private String url;
+
     public static BookDto toDto(Book book) {
         return BookDto.builder()
                 .id(book.getId())
                 .name(book.getName())
                 .genre(book.getGenre().getName())
                 .author(book.getAuthor().getName())
+                .description(book.getDescription())
+                .url(book.getUrl())
                 .build();
     }
 }

@@ -25,6 +25,10 @@ public class Book {
 
     private Author author;
 
+    private String description;
+
+    private String url;
+
     @Override
     public String toString() {
         return "\n" +

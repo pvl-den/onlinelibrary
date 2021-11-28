@@ -19,4 +19,8 @@ public class BookDto {
 
     private String author;
 
+    private String description;
+
+    private String url;
+
 }
