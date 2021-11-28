@@ -23,9 +23,9 @@ public interface BookFeign {
     public BookDto createBook(ParamDto paramBookDto);
 
     @GetMapping("/book/byName/{bookName}")
-    public BookDto getByName(String bookName);
+    public BookDto getByName(@PathVariable("bookName") String bookName);
 
     @GetMapping("/book/byId/{id}")
-    public BookDto getById(String id);
+    public BookDto getById(@PathVariable("id") String id);
 
 }
