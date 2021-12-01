@@ -1,22 +1,23 @@
 package ru.otus.libraryservice.service;
 
+import ru.otus.libraryservice.core.LibraryException;
+import ru.otus.libraryservice.core.Response;
 import ru.otus.libraryservice.dto.AuthorDto;
-import ru.otus.libraryservice.entity.Author;
 import ru.otus.libraryservice.rest.dto.ParamDto;
 
 import java.util.List;
 
 public interface AuthorService {
 
-    AuthorDto getById(String id);
+    Response<AuthorDto> getById(String id) throws LibraryException;
 
-    AuthorDto getByName(String authorName);
+    Response<AuthorDto> getByName(String authorName) throws LibraryException;
 
-    List<AuthorDto> authors();
+    Response<List<AuthorDto>> authors() throws LibraryException;
 
-    AuthorDto createAuthor(ParamDto paramDto);
+    Response<AuthorDto> createAuthor(ParamDto paramDto) throws LibraryException;
 
-    AuthorDto updateAuthor(ParamDto paramDto);
+    Response<AuthorDto> updateAuthor(ParamDto paramDto) throws LibraryException;
 
-    Boolean deleteAuthor(String id);
+    Response<Boolean> deleteAuthor(String id) throws LibraryException;
 }

@@ -3,6 +3,8 @@ package ru.otus.libraryservice.rest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ru.otus.libraryservice.core.LibraryException;
+import ru.otus.libraryservice.core.Response;
 import ru.otus.libraryservice.dto.GenreDto;
 import ru.otus.libraryservice.rest.dto.ParamDto;
 import ru.otus.libraryservice.service.GenreService;
@@ -17,32 +19,32 @@ public class GenreController {
     private final GenreService genreService;
 
     @GetMapping("/genre")
-    public List<GenreDto> genres() {
+    public Response<List<GenreDto>> genres() {
         return genreService.genres();
     }
 
-    @GetMapping("/genre/byId{id}")
-    public GenreDto genreById(@PathVariable("id") final String id) {
+    @GetMapping("/genre/byId/{id}")
+    public Response<GenreDto> genreById(@PathVariable("id") final String id) throws LibraryException {
         return genreService.getById(id);
     }
 
     @GetMapping("/genre/byName/{genreName}")
-    public GenreDto genreByName(@PathVariable("genreName") final String genreName) {
+    public Response<GenreDto> genreByName(@PathVariable("genreName") final String genreName) throws LibraryException {
         return genreService.getByName(genreName);
     }
 
     @PostMapping("/genre/create")
-    public GenreDto createGenre(@RequestBody ParamDto paramDto){
+    public Response<GenreDto> createGenre(@RequestBody ParamDto paramDto) throws LibraryException {
         return genreService.createGenre(paramDto);
     }
 
     @PutMapping("/genre/update")
-    public GenreDto updateGenre(@RequestBody ParamDto paramDto){
+    public Response<GenreDto> updateGenre(@RequestBody ParamDto paramDto) throws LibraryException {
         return genreService.updateGenre(paramDto);
     }
 
     @DeleteMapping("/genre/delete/{id}")
-    public Boolean deleteGenre(@PathVariable("id") final String id){
+    public Response<Boolean> deleteGenre(@PathVariable("id") final String id) throws LibraryException {
         return genreService.deleteGenre(id);
     }
 }

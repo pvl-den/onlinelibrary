@@ -1,23 +1,24 @@
 package ru.otus.libraryservice.service;
 
+import ru.otus.libraryservice.core.LibraryException;
+import ru.otus.libraryservice.core.Response;
 import ru.otus.libraryservice.dto.GenreDto;
-import ru.otus.libraryservice.entity.Genre;
 import ru.otus.libraryservice.rest.dto.ParamDto;
 
 import java.util.List;
 
 public interface GenreService {
 
-    GenreDto getById(String id);
+    Response<GenreDto> getById(String id) throws LibraryException;
 
-    GenreDto getByName(String genreName);
+    Response<GenreDto> getByName(String genreName) throws LibraryException;
 
-    List<GenreDto> genres();
+    Response<List<GenreDto>> genres();
 
-    GenreDto createGenre(ParamDto paramDto);
+    Response<GenreDto> createGenre(ParamDto paramDto) throws LibraryException;
 
-    GenreDto updateGenre(ParamDto paramDto);
+    Response<GenreDto> updateGenre(ParamDto paramDto) throws LibraryException;
 
-    Boolean deleteGenre(String id);
+    Response<Boolean> deleteGenre(String id) throws LibraryException;
 
 }

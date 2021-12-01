@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.libraryservice.core.LibraryException;
+import ru.otus.libraryservice.core.Response;
 import ru.otus.libraryservice.dto.BookDto;
 import ru.otus.libraryservice.entity.Author;
 import ru.otus.libraryservice.entity.Book;
@@ -35,62 +37,70 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional(readOnly = true)
-    public BookDto getById(String id) {
-        Book book = bookRepository.findById(id).orElse(null);
-        return book != null ? BookDto.toDto(book) : null;
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public BookDto getByName(String name) {
+    public Response<BookDto> getById(String id) throws LibraryException {
         try {
-            final Book book = bookRepository.findByName(name);
-            return BookDto.toDto(book);
+            Book book = bookRepository.findById(id).orElse(null);
+            return new Response(BookDto.toDto(book));
         } catch (Exception e) {
-            log.error("Ошибка поиска книги по имени: {} ", name);
-            return null;
+            log.error("ошибка поиска книги с id {}", id);
+            throw new LibraryException("ошибка поиска книги с id " + id);
         }
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<BookDto> books() {
-        return bookRepository.findAll().stream().map(BookDto::toDto).collect(Collectors.toList());
+    public Response<BookDto> getByName(String name) throws LibraryException {
+        try {
+            final Book book = bookRepository.findByName(name);
+            return new Response(BookDto.toDto(book));
+        } catch (Exception e) {
+            log.error("Ошибка поиска книги по имени: {} ", name);
+            throw new LibraryException("ошибка поиска с именем " + name);
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Response<List<BookDto>> books() throws LibraryException {
+        final List<BookDto> books = bookRepository.findAll().stream().map(BookDto::toDto).collect(Collectors.toList());
+        return new Response<>(books);
     }
 
     @Override
     @Transactional
-    public void deleteById(final String id) {
+    public Response<Boolean> deleteById(final String id) throws LibraryException {
         try {
             bookRepository.deleteById(id);
             log.info("Книга удалена id {}", id);
+            return new Response<>(true);
         } catch (Exception e) {
             log.error("Ошибка удаления книги с id: {}", id);
+            throw new LibraryException("ошибка удаления книги с id " + id);
         }
     }
 
     @Override
     @Transactional
-    public BookDto createBook(final ParamDto paramBookDto) {
+    public Response<BookDto> createBook(final ParamDto paramBookDto) throws LibraryException {
         log.info("Создание книги с параметрами name: {} authorName: {} genreName: {}", paramBookDto.getName(), paramBookDto.getAuthorName(), paramBookDto.getGenreName());
 
         if (!checkBookParameter(paramBookDto)) {
             log.error("ошибка создания книги name: {} authorName: {} genreName: {}", paramBookDto.getName(), paramBookDto.getAuthorName(), paramBookDto.getGenreName());
-            return null;
+            throw new LibraryException("ошибка параметров создания книги: " + paramBookDto.getName());
         }
 
         final Author author = authorRepository.findByName(paramBookDto.getAuthorName());
 
         if (author == null) {
             log.error("Ошибка поиска автора");
-            return null;
+            throw new LibraryException("ошибка поиска автора при создании книги: " + paramBookDto.getName());
         }
 
         final Genre genre = genreRepository.findByName(paramBookDto.getGenreName());
 
         if (genre == null) {
             log.error("Ошибка поиска жанра");
-            return null;
+            throw new LibraryException("ошибка поиска жанра при создании книги: " + paramBookDto.getName());
         }
 
         try {
@@ -102,10 +112,10 @@ public class BookServiceImpl implements BookService {
             final Book savedBook = bookRepository.save(book);
 
             log.info("Книга сохранена: {} ", savedBook.getName());
-            return BookDto.toDto(savedBook);
+            return new Response<>(BookDto.toDto(savedBook));
         } catch (Exception e) {
             log.error("Ошибка создания книги");
-            throw new IllegalArgumentException("Ошибка создания книги");
+            throw new LibraryException("ошибка создания книги");
         }
     }
 

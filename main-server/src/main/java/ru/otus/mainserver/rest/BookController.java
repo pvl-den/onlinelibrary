@@ -2,6 +2,7 @@ package ru.otus.mainserver.rest;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ru.otus.mainserver.core.Response;
 import ru.otus.mainserver.dto.BookDto;
 import ru.otus.mainserver.rest.dto.ParamDto;
 import ru.otus.mainserver.service.BookService;
@@ -16,25 +17,25 @@ public class BookController {
 
     @GetMapping("/book")
     @CrossOrigin
-    public List<BookDto> books() {
+    public Response<List<BookDto>> books() {
         return bookService.books();
     }
 
     @PostMapping("/book/create")
     @CrossOrigin
-    public BookDto createBook(@RequestBody ParamDto paramBookDto){
+    public Response<BookDto> createBook(@RequestBody ParamDto paramBookDto){
         return bookService.createBook(paramBookDto);
     }
 
     @CrossOrigin
     @GetMapping("/book/byId/{id}")
-    public BookDto bookById(@PathVariable("id") final String id) {
+    public Response<BookDto> bookById(@PathVariable("id") final String id) {
         return bookService.getById(id);
     }
 
     @CrossOrigin
     @GetMapping("/book/byName/{bookName}")
-    public BookDto bookByName(@PathVariable("bookName") final String bookName) {
+    public Response<BookDto> bookByName(@PathVariable("bookName") final String bookName) {
         return bookService.getByName(bookName);
     }
 

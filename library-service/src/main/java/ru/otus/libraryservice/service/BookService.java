@@ -1,5 +1,7 @@
 package ru.otus.libraryservice.service;
 
+import ru.otus.libraryservice.core.LibraryException;
+import ru.otus.libraryservice.core.Response;
 import ru.otus.libraryservice.dto.BookDto;
 import ru.otus.libraryservice.rest.dto.ParamDto;
 
@@ -9,13 +11,13 @@ public interface BookService {
 
     long count();
 
-    BookDto getById(String id);
+    Response<BookDto> getById(String id) throws LibraryException;
 
-    BookDto getByName(String name);
+    Response<BookDto> getByName(String name) throws LibraryException;
 
-    List<BookDto> books();
+    Response<List<BookDto>> books() throws LibraryException;
 
-    void deleteById(String id);
+    Response<Boolean> deleteById(String id) throws LibraryException;
 
-    BookDto createBook(ParamDto paramBookDto);
+    Response<BookDto> createBook(ParamDto paramBookDto) throws LibraryException;
 }

@@ -2,7 +2,8 @@ package ru.otus.libraryservice.rest;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.otus.libraryservice.dto.AuthorDto;
+import ru.otus.libraryservice.core.LibraryException;
+import ru.otus.libraryservice.core.Response;
 import ru.otus.libraryservice.dto.BookDto;
 import ru.otus.libraryservice.rest.dto.ParamDto;
 import ru.otus.libraryservice.service.BookService;
@@ -16,22 +17,22 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping("/book")
-    public List<BookDto> books() {
+    public Response<List<BookDto>> books() throws LibraryException {
         return bookService.books();
     }
 
     @PostMapping("/book/create")
-    public BookDto createBook(@RequestBody ParamDto paramBookDto){
+    public Response<BookDto> createBook(@RequestBody ParamDto paramBookDto) throws LibraryException {
         return bookService.createBook(paramBookDto);
     }
 
     @GetMapping("/book/byId/{id}")
-    public BookDto bookById(@PathVariable("id") final String id) {
+    public Response<BookDto> bookById(@PathVariable("id") final String id) throws LibraryException {
         return bookService.getById(id);
     }
 
     @GetMapping("/book/byName/{bookName}")
-    public BookDto bookByName(@PathVariable("bookName") final String bookName) {
+    public Response<BookDto> bookByName(@PathVariable("bookName") final String bookName) throws LibraryException {
         return bookService.getByName(bookName);
     }
 

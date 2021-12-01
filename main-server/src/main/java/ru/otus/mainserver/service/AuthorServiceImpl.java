@@ -2,8 +2,9 @@ package ru.otus.mainserver.service;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.stereotype.Service;
+import ru.otus.mainserver.core.LibraryException;
+import ru.otus.mainserver.core.Response;
 import ru.otus.mainserver.dto.AuthorDto;
-import ru.otus.mainserver.dto.GenreDto;
 import ru.otus.mainserver.feign.AuthorFeign;
 import ru.otus.mainserver.rest.dto.ParamDto;
 
@@ -20,53 +21,54 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     @HystrixCommand(fallbackMethod = "emptyAuthorCollection")
-    public List<AuthorDto> authors() {
+    public Response<List<AuthorDto>> authors() {
         return authorFeign.authors();
     }
 
     @Override
     @HystrixCommand(fallbackMethod = "emptyAuthor")
-    public AuthorDto getById(String id) {
+    public Response<AuthorDto> getById(String id) throws InterruptedException {
+        Thread.sleep(10000);
         return authorFeign.getById(id);
     }
 
     @Override
     @HystrixCommand(fallbackMethod = "emptyAuthor")
-    public AuthorDto getByName(String authorName) {
+    public Response<AuthorDto> getByName(String authorName) {
         return authorFeign.getByName(authorName);
     }
 
     @Override
     @HystrixCommand(fallbackMethod = "emptyAuthor")
-    public AuthorDto createAuthor(ParamDto paramDto) {
+    public Response<AuthorDto> createAuthor(ParamDto paramDto) {
         return authorFeign.createAuthor(paramDto);
     }
 
     @Override
     @HystrixCommand(fallbackMethod = "emptyAuthor")
-    public AuthorDto updateAuthor(ParamDto paramDto) {
+    public Response<AuthorDto> updateAuthor(ParamDto paramDto) {
         return authorFeign.updateAuthor(paramDto);
     }
 
     @Override
     @HystrixCommand(fallbackMethod = "falseAuthor")
-    public Boolean deleteAuthor(String id) {
+    public Response<Boolean> deleteAuthor(String id) {
         return authorFeign.deleteAuthor(id);
     }
 
-    AuthorDto emptyAuthor(ParamDto paramDto) {
-        return AuthorDto.builder().build();
+    Response<AuthorDto> emptyAuthor(ParamDto paramDto) throws LibraryException {
+        return new Response("Привет от fallbackMethod");
     }
 
-    AuthorDto emptyAuthor(String id) {
-        return AuthorDto.builder().build();
+    Response<AuthorDto> emptyAuthor(String id) throws LibraryException {
+        return new Response("Привет от fallbackMethod");
     }
 
-    Boolean falseAuthor(String id) {
-        return false;
+    Response<Boolean> falseAuthor(String id) throws LibraryException {
+        return new Response("Привет от fallbackMethod");
     }
 
-    List<AuthorDto> emptyAuthorCollection() {
-        return List.of(AuthorDto.builder().build());
+    Response<List<AuthorDto>> emptyAuthorCollection() throws LibraryException {
+        return new Response("Привет от fallbackMethod");
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.otus.mainserver.core.Response;
 import ru.otus.mainserver.dto.BookDto;
 import ru.otus.mainserver.rest.dto.ParamDto;
 
@@ -17,15 +18,15 @@ import java.util.List;
 public interface BookFeign {
 
     @GetMapping("/book")
-    public List<BookDto>  books();
+    public Response<List<BookDto>>  books();
 
     @PostMapping("/book/create")
-    public BookDto createBook(ParamDto paramBookDto);
+    public Response<BookDto> createBook(ParamDto paramBookDto);
 
     @GetMapping("/book/byName/{bookName}")
-    public BookDto getByName(@PathVariable("bookName") String bookName);
+    public Response<BookDto> getByName(@PathVariable("bookName") String bookName);
 
     @GetMapping("/book/byId/{id}")
-    public BookDto getById(@PathVariable("id") String id);
+    public Response<BookDto> getById(@PathVariable("id") String id);
 
 }

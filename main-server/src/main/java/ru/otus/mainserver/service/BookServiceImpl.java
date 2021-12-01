@@ -3,6 +3,7 @@ package ru.otus.mainserver.service;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.otus.mainserver.core.Response;
 import ru.otus.mainserver.dto.BookDto;
 import ru.otus.mainserver.feign.BookFeign;
 import ru.otus.mainserver.rest.dto.ParamDto;
@@ -17,37 +18,37 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @HystrixCommand(fallbackMethod = "emptyBookCollection")
-    public List<BookDto> books() {
+    public Response<List<BookDto>> books() {
         return bookFeign.books();
     }
 
     @Override
     @HystrixCommand(fallbackMethod = "emptyBook")
-    public BookDto createBook(ParamDto paramBookDto) {
+    public Response<BookDto> createBook(ParamDto paramBookDto) {
         return bookFeign.createBook(paramBookDto);
-
     }
 
     @Override
     @HystrixCommand(fallbackMethod = "emptyBook")
-    public BookDto getById(String id) {
+    public Response<BookDto> getById(String id) {
         return bookFeign.getById(id);
     }
 
     @Override
     @HystrixCommand(fallbackMethod = "emptyBook")
-    public BookDto getByName(String bookName) {
+    public Response<BookDto> getByName(String bookName) {
         return bookFeign.getByName(bookName);
     }
 
-    BookDto emptyBook(ParamDto paramBookDto){
-        return BookDto.builder().build();
-    }
-    BookDto emptyBook(String bookName){
-        return BookDto.builder().build();
+    Response<BookDto> emptyBook(ParamDto paramBookDto) {
+        return new Response("Привет от fallbackMethod");
     }
 
-    List<BookDto> emptyBookCollection() {
-        return List.of(BookDto.builder().build());
+    Response<BookDto> emptyBook(String bookName) {
+        return new Response("Привет от fallbackMethod");
+    }
+
+    Response<List<BookDto>> emptyBookCollection() {
+        return new Response("Привет от fallbackMethod");
     }
 }

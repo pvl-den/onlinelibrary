@@ -1,23 +1,23 @@
 package ru.otus.mainserver.service;
 
+import ru.otus.mainserver.core.Response;
 import ru.otus.mainserver.dto.AuthorDto;
-import ru.otus.mainserver.dto.BookDto;
 import ru.otus.mainserver.rest.dto.ParamDto;
 
 import java.util.List;
 
 public interface AuthorService {
 
-    public List<AuthorDto> authors();
+    Response<List<AuthorDto>> authors();
 
-    AuthorDto getById(String id);
+    Response<AuthorDto> getById(String id) throws InterruptedException;
 
-    AuthorDto getByName(String genreName);
+    Response<AuthorDto> getByName(String genreName);
 
-    AuthorDto createAuthor(ParamDto paramDto);
+    Response<AuthorDto> createAuthor(ParamDto paramDto);
 
-    AuthorDto updateAuthor(ParamDto paramDto);
+    Response<AuthorDto> updateAuthor(ParamDto paramDto);
 
-    Boolean deleteAuthor(String id);
+    Response<Boolean> deleteAuthor(String id);
 
 }
